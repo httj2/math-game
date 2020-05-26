@@ -13,9 +13,11 @@ class Game
   def next_round
     puts " ---- New Turn -----"
   end 
+
   def game_over? #question mark means will return a boolean
     @player1.lives <= 0 || @player2.lives <= 0
   end 
+
   def game_status
     puts "#{@player1.nick_name}: #{@player1.lives}/3 vs. #{@player2.nick_name}: #{@player2.lives}/3"
   end 
@@ -26,18 +28,31 @@ class Game
     puts "Good bye!"
   end
 
+  def wrong_answer
+    puts "#{@current_player.name}: Sorry! thats not right!"
+    lose_point = @current_player.lives -= 1 
+  end 
+
+  def right_answer
+    puts "#{@current_player.name}: Yes! you are correct!"
+  end 
+  
+  def math_question
+    @question = Questions.new
+    puts "#{@current_player.name}: #{@question.print}"
+  end 
+
   def play
+    #  creating loop for the rounds
     until(game_over?) do
-      current_player = @players[0]
-      question = Questions.new
-      puts "#{current_player.name}: #{question.print}"
+      @current_player = @players[1]
+      math_question
       print "> "
       user_answer = gets.chomp.to_i
-      if user_answer == question.answer 
-        puts "#{current_player.name}: Yes! you are correct!"
+      if user_answer == @question.answer 
+        right_answer
       else 
-        puts "#{current_player.name}: Sorry! thats not right!"
-        lose_point = current_player.lives -= 1 
+        wrong_answer
       end 
       @players.rotate!
       game_status
