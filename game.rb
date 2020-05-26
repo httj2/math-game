@@ -30,9 +30,13 @@ class Game
 
   def wrong_answer
     puts "#{@current_player.name}: Sorry! thats not right!"
-    lose_point = @current_player.lives -= 1 
+    lose_life
   end 
 
+  def lose_life
+    @current_player.lives -= 1 
+  end 
+  
   def right_answer
     puts "#{@current_player.name}: Yes! you are correct!"
   end 
@@ -49,6 +53,7 @@ class Game
       math_question
       print "> "
       user_answer = gets.chomp.to_i
+
       if user_answer == @question.answer 
         right_answer
       else 

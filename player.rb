@@ -7,10 +7,8 @@ class Player
     @nick_name = nick_name
     @lives = 3
   end 
-  
-  def dead?
-    @lives <= 0
-  end
+
+
 
 
 end 
