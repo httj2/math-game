@@ -15,7 +15,7 @@ class Game
   end 
 
   def game_over? #question mark means will return a boolean
-    @player1.lives <= 0 || @player2.lives <= 0
+    !@player1.alive? || !@player2.alive?
   end 
 
   def game_status
@@ -30,12 +30,8 @@ class Game
 
   def wrong_answer
     puts "#{@current_player.name}: Sorry! thats not right!"
-    lose_life
-  end 
-
-  def lose_life
-    @current_player.lives -= 1 
-  end 
+    @current_player.lose_life
+  end  
   
   def right_answer
     puts "#{@current_player.name}: Yes! you are correct!"
@@ -51,9 +47,10 @@ class Game
     until(game_over?) do
       @current_player = @players[1]
       math_question
+      
       print "> "
       user_answer = gets.chomp.to_i
-
+      
       if user_answer == @question.answer 
         right_answer
       else 
